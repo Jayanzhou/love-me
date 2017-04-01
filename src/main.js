@@ -6,6 +6,9 @@ import router from './router'
 import Vuex from 'vuex'
 import store from './store/index'
 
+window.$ = window.Zepto = require('webpack-zepto');
+require("./util/zepto-adapter");//zepto 公共扩展
+
 Vue.use(Vuex)
 
 Vue.config.productionTip = false

@@ -1,5 +1,5 @@
 <template>
-<div v-show="isShow">
+<div v-show="isShow" class="people-num">
     <p>
     你喜欢了{{loveNum}}人
     </p>
@@ -26,6 +26,10 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+.people-num > p{
+    height: 0.58rem;
+    line-height: 0.58rem;
+    text-align: center;
+}
 </style>

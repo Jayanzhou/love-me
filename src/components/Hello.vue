@@ -1,18 +1,28 @@
 <template>
   <div class="hello">
-    <div class="img-box">
-        <img :src="picSrc" class="hello-img"/>
-    </div>
-    <p class="notice">喜欢左划，讨厌右划</p>
-    <div class="love-hate" @click="loveHate">
-        <div>
-            <p class="love">LOVE</p>
-        </div>
-        <div>
-            <p class="hate">HATE</p>
-        </div>
-    </div>
-    <notice :isShow="isShow" :loveNum="loveNum" :hateNum="hateNum"></notice>
+    <header class="top-box">
+        <span></span>
+        <h1>喜欢</h1>
+    </header>
+    <section class="hello-box">
+        <input type="checkbox" id="J_nav_radio"/>
+            <label for="J_nav_radio" class="top-nav-bar"><i class="iconfont J_nav_icon">&#xe673;</i></label>
+            <div class="top-nav"><span>喜欢你就点我吧</span></div>
+            <div class="img-box">
+                <img :src="picSrc" class="hello-img"/>
+            </div>
+            <p class="notice">喜欢左划，讨厌右划</p>
+            <div class="love-hate" @click="loveHate">
+                <div>
+                    <p class="love">LOVE</p>
+                </div>
+                <div>
+                    <p class="hate">HATE</p>
+                </div>
+            </div>
+            <notice :isShow="isShow" :loveNum="loveNum" :hateNum="hateNum"></notice>
+    </section>
+
   </div>
 </template>
 
@@ -29,12 +39,14 @@ export default {
         startY: 0,
         moveEndX: 0,
         moveEndY: 0
-      }
+      },
+      picNum: 0
     }
   },
   computed: {
     picSrc(){
-        return require('../assets/imgs/person_' + this.$store.state.picNum + '.jpg');
+        //return require('../assets/imgs/person_' + this.$store.state.picNum + '.jpg');
+        return require('../assets/imgs/person_' + this.picNum + '.jpg');
     },
     loveNum(){
         return this.$store.state.loveNum;
@@ -46,8 +58,17 @@ export default {
   components: {
     Notice
   },
+  created(){
+    this.fetchData();
+    console.log('created');
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+
   mounted(){
     //绑定滑动事件
+    console.log('mounted');
     this.touchMove();
     this.$root.eventHub.$on('angela_gogogo', (str)=>{
         //debugger
@@ -57,14 +78,43 @@ export default {
   },
 
   methods: {
+    fetchData(){
+          this.picNum = this.$route.params.id;
+    },
     loveHate(e){
         let target = e.target;
         console.log(target.innerHTML);
         if(target.className === 'love'){
-            this.$store.dispatch('addLoveNum');
+            //this.$store.dispatch('addLoveNum');
+            this.$router.push({
+                name: 'Hello',
+                params: {
+                    id: this.getPicId()
+                }
+            });
         }else if(target.className === 'hate'){
-            this.$store.dispatch('addHateNum');
+            //this.$store.dispatch('addHateNum');
+            /*
+            this.$router.push({
+                            name: 'Hello',
+                            params: {
+                                id: this.getPicId()
+                            }
+                        });*/
+            this.$router.push({
+                name: 'Personal'
+            });
         }else{}
+    },
+    getPicId(){
+                //更换图片
+                let num = this.picNum;
+                if(num < 2){
+                    num ++;
+                }else{
+                    num = 0;
+                }
+                return num;
     },
     touchMove(){
         let imgBox = document.getElementsByClassName('img-box')[0];
@@ -101,16 +151,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hello{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.hello-box{
+    margin-top: 0.88rem;
+    width: 100%;
 }
 .love-hate{
     display: flex;
     justify-content: space-between;
-    width: 70%;
 }
 .love-hate div{
     flex: 1;
@@ -124,9 +171,14 @@ export default {
     text-align: center;
     border-radius: 50%;
 }
+.img-box{
+    width: 6rem;
+    height: 8rem;
+    margin: 0.3rem auto;
+}
 .hello-img{
-    width: 300px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
 }
 .love{
     background: green;
@@ -138,5 +190,38 @@ export default {
 }
 .notice{
     color: gray;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    text-align: center;
+}
+.top-nav-bar{
+    width: .46rem;
+    height: .46rem;
+    position: fixed;
+    top: 0.21rem;
+    right: 0.16rem;
+}
+.top-nav-bar span{
+    width: 0.46rem;
+    height: 0.46rem;
+}
+#J_nav_radio{
+    width: 0.46rem;
+    height: 0.46rem;
+    opacity: 0;
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+}
+#J_nav_radio:checked ~ .top-nav{
+    height: 1rem;
+}
+#J_nav_radio:checked + .top-nav-bar{
+    color: #c70034;
+}
+.J_nav_icon{
+    font-size: 0.46rem;
 }
 </style>
