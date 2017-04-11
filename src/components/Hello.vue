@@ -40,13 +40,16 @@ export default {
         moveEndX: 0,
         moveEndY: 0
       },
+        innerObj: {
+
+        },
       picNum: 0
     }
   },
   computed: {
     picSrc(){
         //return require('../assets/imgs/person_' + this.$store.state.picNum + '.jpg');
-        return require('../assets/imgs/person_' + this.picNum + '.jpg');
+        return require('../assets/imgs/person_' + (this.innerObj.picNew || this.picNum) + '.jpg');
     },
     loveNum(){
         return this.$store.state.loveNum;
@@ -81,7 +84,13 @@ export default {
     fetchData(){
           this.picNum = this.$route.params.id;
     },
-    loveHate(e){
+      loveHate(){
+          console.log(1);
+          //this.$set(this.innerObj, 'picNew', 1);
+          //this.innerObj.picNew = 1;
+          this.innerObj = Object.assign({}, this.innerObj, {picNew: 1});
+      },
+    loveHate2(e){
         let target = e.target;
         console.log(target.innerHTML);
         if(target.className === 'love'){

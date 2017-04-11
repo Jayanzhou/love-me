@@ -18,7 +18,7 @@ export function ajaxDefine(ajaxObj){
             url: ajaxObj.url,
             type: ajaxObj.method || 'GET',
             header: HEADER,
-            data: `data=${data}`,
+            //data: `data=${data}`,
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(res){

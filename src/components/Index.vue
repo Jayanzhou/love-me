@@ -1,14 +1,14 @@
 <template>
     <article class="jay-index-box">
         <div class="hello_img">
-            < img :class="{rotate:music.play,pause:music.pause}" :src="rotateImgUrl">
-            < img class="music-btn" :src="music.img_url" @click="musicPlay">
+            <img :class="{rotate:music.play,pause:music.pause}" :src="rotateImgUrl">
+            <img class="music-btn" :src="music.img_url" @click="musicPlay">
         </div>
         <p class="msg_class">{{msg}}</p >
-        <ul class="login-sign">
-            <li><p >Login</p></li>
-            <li><p >Sign</p></li>
-        </ul>
+        <div class="login-sign">
+            <p @click="goLogin">Login</p>
+            <p @click="goSign">Sign</p>
+        </div>
         <audio :src="audioElSrc" autoplay="" id="music_index"></audio>
     </article>
 
@@ -20,11 +20,11 @@
         data(){
             return {
                 msg: 'Welcome, my friends',
-                rotateImgUrl: require('../assets/img/flower_index.jpg'),
+                rotateImgUrl: require('../assets/imgs/flower_index.jpg'),
                 music: {
                     play: true,
                     pause: false,
-                    img_url: require('../assets/img/pause.png')
+                    img_url: require('../assets/imgs/pause.png')
                 },
                 audioElSrc: require('../assets/music/together.mp3'),
                 audioEl: null
@@ -38,14 +38,22 @@
                 if(this.music.play){
                     this.music.play = false;
                     this.music.pause = true;
-                    this.music.img_url = require('../assets/img/play.png');
+                    this.music.img_url = require('../assets/imgs/play.png');
                     this.audioEl.pause();
                 }else{
                     this.music.play = true;
                     this.music.pause = false;
-                    this.music.img_url = require('../assets/img/pause.png');
+                    this.music.img_url = require('../assets/imgs/pause.png');
                     this.audioEl.play();
                 }
+            },
+            goLogin(e){
+                this.$router.push({
+                    name: 'Login'
+                });
+            },
+            goSign(e){
+
             }
         }
     }
@@ -104,9 +112,19 @@
         width: 1.6rem!important;
         height: 1.6rem!important;
     }
-    .login-sign li a{
-        text-decoration: none;
+    .login-sign{
+        width: 100%;
+        display: flex;
     }
+    .login-sign p{
+        color: #42b983;
+        font-size: 0.5rem;
+        flex: 1;
+        height: 0.6rem;
+        line-height: 0.6rem;
+        text-align: center;
+    }
+
     @keyframes rotate {
         from{
             transform: rotate(0deg);

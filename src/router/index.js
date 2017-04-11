@@ -11,7 +11,7 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: (resolve)=>{
-          require(['@/components/Hello'], resolve);
+          require(['@/components/Index'], resolve);
       }
     },{
       path: '/love_hate/:id',
@@ -20,10 +20,22 @@ export default new Router({
           require(['@/components/Hello'], resolve);
       }
     },{
-      path: '/personal/',
-      name: 'Personal',
+      path: '/login/',
+      name: 'Login',
       component: (resolve)=>{
-          require(['@/components/Notice'], resolve);
+          require(['@/components/LoginSign'], resolve);
+      }
+    },{
+      path: '/sign/',
+      name: 'Sign',
+      component: (resolve)=> {
+          require(['@/components/LoginSign'], resolve);
+      }
+    },{
+      path: '/load/',
+      name: 'Load',
+      component: (resolve)=> {
+          require(['@/components/Load'], resolve);
       }
   }
   ]

@@ -5,7 +5,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'app',
@@ -22,10 +21,15 @@ export default {
   color: #2c3e50;
   //margin-top: 60px;
   margin: 0 auto;
-
+  width: 100%;
+  height: 100%;
 }
 body{
     background: #eee;
+}
+.container{
+  width: 100%;
+  height: 100%;
 }
 
 @import './assets/css/common.css'
